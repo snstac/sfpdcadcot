@@ -16,18 +16,15 @@
 # Author:: Greg Albrecht W2GMD <oss@undef.net>
 #
 
-"""ADSBXCOT Class Definitions."""
+"""SFPDCADCOT Class Definitions."""
 
 import asyncio
 
-from configparser import SectionProxy
 from typing import Union
 
-import aiohttp
 import pandas as pd
 
 import pytak
-import aircot
 import sfpdcadcot
 
 
@@ -39,11 +36,6 @@ __license__ = "Apache License, Version 2.0"
 class CADWorker(pytak.QueueWorker):
 
     """Reads CAD Data, renders to COT, and puts on Queue."""
-
-    def __init__(self, queue: asyncio.Queue, config: SectionProxy) -> None:
-        super().__init__(queue, config)
-        self.session: Union[aiohttp.ClientSession, None] = None
-
     async def handle_data(self, data: list) -> None:
         """
         Transforms Data to COT and puts it onto TX queue.
@@ -77,8 +69,7 @@ class CADWorker(pytak.QueueWorker):
             "POLL_INTERVAL", sfpdcadcot.DEFAULT_POLL_INTERVAL
         )
 
-        async with aiohttp.ClientSession() as self.session:
-            while 1:
-                self._logger.info("%s polling every %ss: %s", self.__class__, poll_interval, url)
-                await self.get_cad_feed(url)
-                await asyncio.sleep(int(poll_interval))
+        while 1:
+            self._logger.info("%s polling every %ss: %s", self.__class__, poll_interval, url)
+            await self.get_cad_feed(url)
+            await asyncio.sleep(int(poll_interval))

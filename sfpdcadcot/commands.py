@@ -26,6 +26,7 @@ __license__ = "Apache License, Version 2.0"
 
 
 def main() -> None:
+    """Main func."""
     # PyTAK CLI tool boilerplate:
     pytak.cli(__name__.split(".")[0])
 

@@ -16,11 +16,11 @@
 # Author:: Greg Albrecht W2GMD <oss@undef.net>
 #
 
-"""ADSBXCOT Functions."""
+"""SFPDCADCOT Functions."""
 
 import xml.etree.ElementTree as ET
 
-from configparser import ConfigParser
+from configparser import SectionProxy
 from typing import Union, Set
 
 import pytak
@@ -33,7 +33,7 @@ __license__ = "Apache License, Version 2.0"
 
 
 def create_tasks(
-    config: ConfigParser, clitool: pytak.CLITool
+    config: SectionProxy, clitool: pytak.CLITool
 ) -> Set[pytak.Worker,]:
     """
     Creates specific coroutine task set for this application.
@@ -53,17 +53,16 @@ def create_tasks(
     return set([sfpdcadcot.CADWorker(clitool.tx_queue, config)])
 
 
-def call_to_cot_xml(call: dict, config: Union[dict, None] = None) -> Union[ET.Element, None]:
+def call_to_cot_xml(call: dict, config: Union[SectionProxy, None] = None) -> Union[ET.Element, None]:
     """
-    Serializes a ADSBExchange.com aircraft objects as Cursor-On-Target XML.
+    Serializes a SFPD CAD calls as Cursor-On-Target XML.
 
     Parameters
     ----------
     craft : `dict`
-        Key/Value data struct of decoded ADS-B aircraft data.
-    config : `configparser.ConfigParser`
+        Key/Value data struct of CAD data.
+    config : `configparser.SectionProxy`
         Configuration options and values.
-        Uses config options: UID_KEY, COT_STALE, COT_HOST_ID
 
     Returns
     -------
@@ -129,6 +128,7 @@ def call_to_cot_xml(call: dict, config: Union[dict, None] = None) -> Union[ET.El
     root.set("type", cot_type)
     root.set("uid", cot_uid)
     root.set("how", "m-g")
+    # FIXME: Convert CAD timestamp to UTC, and use here:
     root.set("time", pytak.cot_time())
     root.set("start", pytak.cot_time())
     root.set("stale", pytak.cot_time(cot_stale))

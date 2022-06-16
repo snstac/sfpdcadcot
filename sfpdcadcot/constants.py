@@ -16,7 +16,7 @@
 # Author:: Greg Albrecht W2GMD <oss@undef.net>
 #
 
-"""ADSBXCOT Constants."""
+"""SFPDCADCOT Constants."""
 
 import logging
 import os

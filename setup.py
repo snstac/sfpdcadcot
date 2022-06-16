@@ -50,7 +50,7 @@ setuptools.setup(
     package_dir={__title__: __title__},
     url=f"https://github.com/ampledata/{__title__}",
     entry_points={"console_scripts": [f"{__title__} = {__title__}.commands:main"]},
-    description="SFPD CAD to Cursor-On-Target Gateway.",
+    description="SFPD CAD to Cursor-On-Target Gateway for ATAK and other TAK systems.",
     author="Greg Albrecht",
     author_email="oss@undef.net",
     package_data={"": ["LICENSE"]},
@@ -59,11 +59,7 @@ setuptools.setup(
     long_description_content_type="text/x-rst",
     zip_safe=False,
     include_package_data=True,
-    install_requires=[
-        "pytak >= 5.0.0",
-        "pandas",
-        "aiohttp",
-    ],
+    install_requires=["pytak >= 5.0.0", "pandas"],
     classifiers=[
         "Programming Language :: Python",
         "License :: OSI Approved :: Apache Software License",
