@@ -24,7 +24,6 @@ from configparser import SectionProxy
 from typing import Union, Set
 
 import pytak
-import aircot
 import sfpdcadcot  # pylint: disable=cyclic-import
 
 __author__ = "Greg Albrecht W2GMD <oss@undef.net>"
